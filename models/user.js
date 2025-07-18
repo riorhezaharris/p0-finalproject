@@ -10,7 +10,7 @@ class User {
     }
     const connection = await getConnection()
     const response = await connection.query(
-      `INSERT INTO users (email, password) VALUES ('${input.email}', '${input.encryptedPassword}');`
+      `INSERT INTO users (email, password) VALUES ('${input.email}', '${encryptedPassword}');`
     )
     return true
   }

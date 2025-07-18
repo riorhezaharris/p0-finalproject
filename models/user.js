@@ -1,18 +1,26 @@
 const { encryptPassword } = require('../helpers/bcrypt')
+const getConnection = require('../config/mysql.js')
 
 class User {
-  static create(input) {
+  static async create(input) {
     const encryptedPassword = encryptPassword(input.password)
     let objUser = {
       email: input.email,
       password: encryptedPassword
     }
-    console.log(objUser);
-
+    const connection = await getConnection()
+    const response = await connection.query(
+      `INSERT INTO users (email, password) VALUES ('${input.email}', '${input.encryptedPassword}');`
+    )
+    return true
   }
 
-  static findOne(input) {
-    console.log(input);
+  static async findOne(email) {
+    const connection = await getConnection()
+    const response = await connection.query(
+      `SELECT * FROM users WHERE users.email = '${email}';`
+    )
+    return response[0][0]
   }
 }
 

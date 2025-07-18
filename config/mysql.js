@@ -1,15 +1,12 @@
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'p0finalproject'
-});
+const mysql = require('mysql2/promise');
 
-connection.connect();
+async function getConnection() {
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'p0finalproject',
+  });
+  return connection;
+}
 
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
-
-connection.end();
+module.exports = getConnection;

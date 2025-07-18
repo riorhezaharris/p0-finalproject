@@ -1,9 +1,13 @@
-const { Form } = require('../models/form')
-
+const Form = require('../models/form.js')
 class FormController {
-  static create(req, res) {
-    const payload = req.body
-    Form.create(payload)
+  static async create(req, res) {
+    try {
+      const payload = req.body
+      const response = await Form.create(payload)
+      res.status(201).json(response)
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
